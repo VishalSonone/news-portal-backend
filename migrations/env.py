@@ -8,7 +8,7 @@ from alembic import context
 from app.core.config import settings
 from app.db.session import Base
 
-from app.db.models import user_model,category_model,comment_model,media_model,like_model,article_model
+from app.db.models import article, category, comment, like, media, user
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
