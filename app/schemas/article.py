@@ -22,18 +22,19 @@ class ArticleBase(BaseModel):
 class ArticleCreate(ArticleBase):
     category_id: Optional[int] = None
 
-class ArticleUpdate(ArticleBase):
+class ArticleUpdate(BaseModel):
     title: Optional[str] = None
     slug: Optional[str] = None
     summary: Optional[str] = None
     content: Optional[str] = None
     status: Optional[ArticleStatus] = None
+    publish_at: Optional[datetime] = None
     category_id: Optional[int] = None
 
 class ArticleRead(ArticleBase):
     id: uuid.UUID
     author_id: uuid.UUID
-    category: Optional[CategoryRead]
+    category_id: Optional[int]
     views: int
     likes_count: int
     created_at: datetime
