@@ -7,7 +7,7 @@ from app.services.user_service import get_user_by_email, create_user
 from app.schemas.user import UserCreate, UserRead
 from app.core.security import verify_password, create_access_token
 from app.core.config import settings
-
+from app.schemas.token import Token
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
@@ -22,7 +22,7 @@ def register_user(user_in: UserCreate, db: Session = Depends(get_db)):
     return user
 
 
-@router.post("/login")
+@router.post("/login",response_model=Token)
 def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     """
     Authenticate user and return JWT token.
@@ -40,4 +40,4 @@ def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = D
         expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
     )
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    return Token(access_token=access_token, token_type="bearer")
