@@ -45,3 +45,7 @@ def update_category(db: Session, category: models.Category, data: CategoryUpdate
 def delete_category(db: Session, category: models.Category):
     db.delete(category)
     db.commit()
+
+
+def get_category_by_slug(db: Session, slug: str):
+    return db.query(models.Category).filter(models.Category.slug == slug).first()
