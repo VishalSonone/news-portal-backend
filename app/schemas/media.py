@@ -14,5 +14,4 @@ class MediaRead(BaseModel):
     size: int | None = None
     uploaded_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True }

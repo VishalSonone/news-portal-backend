@@ -18,8 +18,4 @@ class CategoryUpdate(BaseModel):
     slug: Optional[str] = None
     description: Optional[str] = None
 
-    class Config:
-        orm_mode = True
-
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True }

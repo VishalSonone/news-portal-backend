@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_db, get_current_user
+from app.api.deps import get_db, get_current_user, require_roles, ensure_comment_delete_permission
 from app.schemas.comment import CommentCreate, CommentRead
 from app.services.comment_service import (
     create_comment,
@@ -14,19 +14,19 @@ from app.services.article_service import get_article
 router = APIRouter(prefix="/comments", tags=["comments"])
 
 
-@router.post("/", response_model=CommentRead, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=CommentRead, status_code=status.HTTP_201_CREATED,
+             dependencies=[Depends(require_roles("reader", "author", "editor", "admin"))])
 def create_new_comment(
     data: CommentCreate,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    # Check if article exists
     article = get_article(db, data.article_id)
     if not article:
         raise HTTPException(status_code=404, detail="Article not found")
-
     comment = create_comment(db, data, user_id=current_user.id)
     return comment
+
 
 @router.get("/article/{article_id}", response_model=list[CommentRead])
 def get_comments_for_article(article_id: str, db: Session = Depends(get_db)):
@@ -37,16 +37,7 @@ def get_comments_for_article(article_id: str, db: Session = Depends(get_db)):
 @router.delete("/{comment_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_single_comment(
     comment_id: str,
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user),
+    comment = Depends(ensure_comment_delete_permission)
 ):
-    comment = get_comment(db, comment_id)
-    if not comment:
-        raise HTTPException(status_code=404, detail="Comment not found")
-
-    # Only comment owner or admin can delete
-    if comment.user_id != current_user.id and current_user.role != "admin":
-        raise HTTPException(status_code=403, detail="Not authorized to delete this comment")
-
-    delete_comment(db, comment)
+    delete_comment(comment.session if hasattr(comment, "session") else None, comment)  # delete_comment expects db + comment
     return None

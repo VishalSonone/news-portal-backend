@@ -3,6 +3,10 @@ from datetime import datetime, timedelta
 from typing import Optional
 from jose import jwt, JWTError
 from app.core.config import settings
+import logging  # <--- NEW: Import logging module
+
+# Configure a basic logger for the backend console output
+logger = logging.getLogger('uvicorn') 
 
 
 def get_password_hash(password: str) -> str:
@@ -28,5 +32,7 @@ def decode_access_token(token: str):
     try:
         payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
         return payload
-    except JWTError:
+    except JWTError as e:  # <--- MODIFIED: Catch the error instance
+        # 💡 LOG FAILURE: Prints the exact reason the token is invalid (e.g., expired, bad signature)
+        logger.error(f"JWT Decoding failed. Token: {token[:20]}... Error: {e}")
         return None
