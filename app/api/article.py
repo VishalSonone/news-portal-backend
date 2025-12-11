@@ -28,7 +28,7 @@ router = APIRouter(prefix="/articles", tags=["articles"])
 
 
 @router.post("/", response_model=ArticleRead, status_code=status.HTTP_201_CREATED,
-             dependencies=[Depends(require_roles("author", "editor", "admin"))])
+             dependencies=[Depends(require_roles("author"))])
 def create_new_article(
     data: ArticleCreate,
     db: Session = Depends(get_db),

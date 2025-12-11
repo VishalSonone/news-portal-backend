@@ -4,6 +4,7 @@ from app.db import models
 from app.schemas.article import ArticleCreate, ArticleUpdate
 from sqlalchemy import or_
 from fastapi import HTTPException
+from app.services.embedding_service import index_article
 
 
 def create_article(db: Session, data: ArticleCreate, author_id: str):
@@ -14,6 +15,11 @@ def create_article(db: Session, data: ArticleCreate, author_id: str):
     db.add(article)
     db.commit()
     db.refresh(article)
+    try:
+        index_article(article)
+    except:
+        pass
+
     return article
 
 
@@ -208,6 +214,11 @@ def update_article(db: Session, article: models.Article, data: ArticleUpdate, cu
 
     db.commit()
     db.refresh(article)
+    try:
+        index_article(article)
+    except:
+        pass
+
     return article
 
 

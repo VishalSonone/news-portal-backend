@@ -1,0 +1,81 @@
+Updating article 04a9949f-46eb-4d29-9044-189e9b3cf6f1
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 04a9949f-46eb-4d29-9044-189e9b3cf6f1
+User: 19cc497b-df83-4356-9e82-a129d8d10c67 (Role: RoleEnum.admin)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=None category_id=None rejection_reason=None
+Updating article 5ce611d5-67c7-468b-b357-a2ed3bbac38c
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article fbc7640f-2030-499c-ad73-5647410bf961
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article b241a709-0d0a-4f9f-b9f0-1a76976ef3c4
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article fbc7640f-2030-499c-ad73-5647410bf961
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 15, 48, 45, 430000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article b241a709-0d0a-4f9f-b9f0-1a76976ef3c4
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 15, 48, 48, 620000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article 5ce611d5-67c7-468b-b357-a2ed3bbac38c
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 15, 48, 51, 805000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article ab85a805-437a-45b6-867e-2c8f8c8a486c
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 438d7a9f-3865-4e9f-9e20-051ca5436ef9
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 438d7a9f-3865-4e9f-9e20-051ca5436ef9
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 0e9c8bee-ac44-4ccd-9b19-a5ac30c1925d
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article ab85a805-437a-45b6-867e-2c8f8c8a486c
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 0, 37, 911000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article 438d7a9f-3865-4e9f-9e20-051ca5436ef9
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 0, 40, 613000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article 0e9c8bee-ac44-4ccd-9b19-a5ac30c1925d
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 0, 44, 701000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article 3d86b4a3-24d7-44ba-9b4c-444f5e82c1e0
+User: 04fd81c6-9253-481d-ab3a-01fedabd3a94 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 48fde9a7-07fe-41eb-8c9c-03dac3ae854e
+User: 04fd81c6-9253-481d-ab3a-01fedabd3a94 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article b116895d-f159-4a80-b4c1-4d7efec8f43c
+User: 04fd81c6-9253-481d-ab3a-01fedabd3a94 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 3d86b4a3-24d7-44ba-9b4c-444f5e82c1e0
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 9, 43, 428000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article 48fde9a7-07fe-41eb-8c9c-03dac3ae854e
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 9, 46, 154000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article b116895d-f159-4a80-b4c1-4d7efec8f43c
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 9, 49, 563000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article deb4398d-1223-48e9-8db3-9e479a11ebb7
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 5305fa4b-bbfd-4d07-b634-3d67e85a4201
+User: 04fd81c6-9253-481d-ab3a-01fedabd3a94 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article d66ea846-ee06-4ff4-bc3d-7a5a5d7953b7
+User: 04fd81c6-9253-481d-ab3a-01fedabd3a94 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 5305fa4b-bbfd-4d07-b634-3d67e85a4201
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 18, 16, 419000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article d66ea846-ee06-4ff4-bc3d-7a5a5d7953b7
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 18, 18, 949000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article deb4398d-1223-48e9-8db3-9e479a11ebb7
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 18, 21, 416000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
