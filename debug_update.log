@@ -79,3 +79,9 @@ Data: title=None slug=None summary=None content=None status=<ArticleStatus.publi
 Updating article deb4398d-1223-48e9-8db3-9e479a11ebb7
 User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
 Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 9, 16, 18, 21, 416000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
+Updating article 9637f124-bd30-4647-824b-3337d356f5aa
+User: ff2fb9dc-af19-474a-b3ca-11caca6666a6 (Role: RoleEnum.author)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.pending_review: 'pending_review'> publish_at=None category_id=None rejection_reason=None
+Updating article 9637f124-bd30-4647-824b-3337d356f5aa
+User: 01fdc4d9-90c6-4fd2-8634-b4004a2872da (Role: RoleEnum.editor)
+Data: title=None slug=None summary=None content=None status=<ArticleStatus.published: 'published'> publish_at=datetime.datetime(2025, 12, 11, 12, 54, 5, 56000, tzinfo=TzInfo(0)) category_id=None rejection_reason=None
