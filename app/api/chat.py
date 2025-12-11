@@ -1,4 +1,4 @@
-# app/api/chat.py
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, Literal, List, Dict, Any
@@ -27,17 +27,27 @@ llm = ChatGroq(
     temperature=0.1,
 )
 
-# Prompt template (replaces manual messages array)
+# ---------------------------------------------------------
+# UPDATE: Refined Prompt Template
+# ---------------------------------------------------------
+system_instructions = (
+    "You are a concise news assistant. Use the following rules:\n"
+    "1. AUTHORITY: Answer using ONLY the provided 'Context'. Do not use outside knowledge. "
+    "If the answer is not in the Context, say: 'I don't have information on that in the current news.'\n"
+    "2. FORMATTING: "
+    "If asked for 'latest' or 'top' news, provide a numbered list: [Headline] - [1-sentence summary]. "
+    "Keep standard answers concise and token-efficient.\n"
+    "3. CONVERSATION: "
+    "Resolve references (e.g., 'the first one', 'details on that') using the 'History'. "
+    "Handle greetings (e.g., 'Hi') briefly and politely, then ask how you can help with the news."
+)
+
 prompt = ChatPromptTemplate.from_messages([
-    ("system",
-     "ONLY answer using the provided context.\n"
-     "If the answer is not in the context, say you don't know."
-    ),
+    ("system", system_instructions),
     MessagesPlaceholder(variable_name="history"),
-    ("human",
-     "Question: {question}\n\nContext:\n{context}"
-    )
+    ("human", "Question: {question}\n\nContext:\n{context}")
 ])
+# ---------------------------------------------------------
 
 
 # ------------------- Pydantic Models --------------------
@@ -53,7 +63,7 @@ class ChatSource(BaseModel):
     slug: Optional[str] = None
     category_id: Optional[int] = None
     snippet: str
-    score: Optional[float] = None  # optional, non-breaking for frontend
+    score: Optional[float] = None
 
 class ChatResponse(BaseModel):
     answer: str
@@ -68,13 +78,10 @@ def is_greeting(text: str) -> bool:
     return bool(GREETING_PATTERN.match(text.strip()))
 
 def is_latest_request(text: str) -> bool:
-    # simple heuristic: contains 'latest' or 'recent' or 'today's news'
     t = text.lower()
     return any(k in t for k in ("latest", "recent", "today", "today's news", "top news"))
 
 def extract_answer_from_result(result):
-    # Robust extraction for different possible LangChain/Groq shapes
-    # prefer .content, then .text, then key 'content' in dict, else fallback to str(result)
     if hasattr(result, "content"):
         return result.content
     if hasattr(result, "text"):
@@ -83,7 +90,6 @@ def extract_answer_from_result(result):
         for k in ("content", "text", "answer"):
             if k in result:
                 return result[k]
-    # fallback
     return str(result)
 
 
@@ -96,28 +102,31 @@ def chat(payload: ChatRequest):
         raise HTTPException(status_code=400, detail="article_id required for local")
 
     # 1) Greeting short-circuit
+    
     if is_greeting(question):
         return ChatResponse(
-            answer="Hello. How can I help you with the news today?",
+            answer="Hello! I am your news assistant. How can I help you check the headlines today?",
             sources=[]
         )
 
-    # 2) Retrieve vector search docs (handle "latest" intent)
+    # 2) Retrieve vector search docs
     try:
-        # for 'latest' queries prefer the heuristic; search_chunks will try to sort by published_at if present.
+        # Pre-process query for 'latest' intent to ensure semantic search hits relevant dates/topics
+        search_query = question if not is_latest_request(question) else "latest top news headlines"
+        
         docs = search_chunks(
-            query=question if not is_latest_request(question) else "latest news",
+            query=search_query,
             mode=payload.mode,
             article_id=payload.article_id,
-            k=5  # return 4-5 latest as requested
+            k=5 
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"search failed: {e}")
 
-    # If no docs found, do NOT call the LLM — return explicit 'I don't know'
+    # Fallback if no docs
     if not docs:
         return ChatResponse(
-            answer="I don't know. No relevant news content found.",
+            answer="I searched the latest feed but couldn't find any relevant news stories right now.",
             sources=[]
         )
 
@@ -125,7 +134,7 @@ def chat(payload: ChatRequest):
     context = "\n\n".join(d.page_content for d in docs if getattr(d, "page_content", None))
     if not context.strip():
         return ChatResponse(
-            answer="I don't know. No relevant news content found.",
+            answer="I searched the latest feed but couldn't find any relevant news content.",
             sources=[]
         )
 
@@ -136,40 +145,34 @@ def chat(payload: ChatRequest):
         content = msg.get("content")
         if role == "user":
             history_messages.append(HumanMessage(content=content))
-        elif role == "assistant" or role == "bot":
+        elif role in ["assistant", "bot"]:
             history_messages.append(AIMessage(content=content))
 
     # Run LangChain Groq LLM
     try:
         chain = prompt | llm
-        # .invoke may accept a dict; extract robustly
         raw_result = chain.invoke({
             "question": question,
             "context": context,
             "history": history_messages
         })
         answer = extract_answer_from_result(raw_result)
-        # ensure string
         if not isinstance(answer, str):
             answer = str(answer)
     except Exception as e:
-        # raise HTTPException(status_code=502, detail=f"LLM failed: {e}")
-        # Log error but return a user-friendly message or fallback
         print(f"LLM Error: {e}")
         answer = "I'm sorry, I'm having trouble processing that right now."
 
-    # Build sources (include optional score if present)
+    # Build sources
     srcs: List[ChatSource] = []
     for d in docs:
         m = getattr(d, "metadata", None) or {}
         score = None
-        # Some vectorstore objects attach a score attribute; try to extract it if present
         if hasattr(d, "score"):
             try:
                 score = float(d.score)
             except Exception:
                 score = None
-        # Also support metadata-based score key
         if score is None and "score" in m:
             try:
                 score = float(m.get("score"))
