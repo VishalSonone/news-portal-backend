@@ -6,6 +6,11 @@ class Settings(BaseSettings):
     JWT_ALGORITHM:str='HS256'
     ACCESS_TOKEN_EXPIRE_MINUTES:int=60
     GROQ_API_KEY :str
+    COHERE_API_KEY:str
+    COHERE_EMBED_MODEL:str
+    CHROMA_PERSIST_DIR:str
+    CHROMA_COLLECTION_NAME:str
+    GROQ_MODEL:str
 
     class Config:
         env_file='.env'

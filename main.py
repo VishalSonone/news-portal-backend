@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.api import auth, users, category, article, media, dashboard, comment, like, bookmark
+from app.api import auth, users, category, article, media, dashboard, comment, like, bookmark,chat
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="News Portal Backend")
@@ -23,6 +23,8 @@ app.include_router(dashboard.router)
 app.include_router(comment.router)
 app.include_router(like.router)
 app.include_router(bookmark.router)
+app.include_router(chat.router)
+
 
 # Mount static files AFTER routers to avoid shadowing /media/upload
 app.mount("/media", StaticFiles(directory="uploads/media"), name="media")
