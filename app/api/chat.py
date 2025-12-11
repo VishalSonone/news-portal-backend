@@ -1,14 +1,15 @@
 # app/api/chat.py
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Optional, Literal, List
+from typing import Optional, Literal, List, Dict, Any
 import re
 
 from app.core.config import settings
 from app.services.embedding_service import search_chunks
 
 from langchain_groq import ChatGroq
-from langchain.prompts import ChatPromptTemplate
+from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.messages import HumanMessage, AIMessage
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -32,6 +33,7 @@ prompt = ChatPromptTemplate.from_messages([
      "ONLY answer using the provided context.\n"
      "If the answer is not in the context, say you don't know."
     ),
+    MessagesPlaceholder(variable_name="history"),
     ("human",
      "Question: {question}\n\nContext:\n{context}"
     )
@@ -44,6 +46,7 @@ class ChatRequest(BaseModel):
     question: str
     mode: Literal["global", "local"] = "global"
     article_id: Optional[str] = None
+    history: List[Dict[str, str]] = []
 
 class ChatSource(BaseModel):
     article_id: str
@@ -126,17 +129,34 @@ def chat(payload: ChatRequest):
             sources=[]
         )
 
+    # Convert frontend history to LangChain messages
+    history_messages = []
+    for msg in payload.history:
+        role = msg.get("role")
+        content = msg.get("content")
+        if role == "user":
+            history_messages.append(HumanMessage(content=content))
+        elif role == "assistant" or role == "bot":
+            history_messages.append(AIMessage(content=content))
+
     # Run LangChain Groq LLM
     try:
         chain = prompt | llm
         # .invoke may accept a dict; extract robustly
-        raw_result = chain.invoke({"question": question, "context": context})
+        raw_result = chain.invoke({
+            "question": question,
+            "context": context,
+            "history": history_messages
+        })
         answer = extract_answer_from_result(raw_result)
         # ensure string
         if not isinstance(answer, str):
             answer = str(answer)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=f"LLM failed: {e}")
+        # raise HTTPException(status_code=502, detail=f"LLM failed: {e}")
+        # Log error but return a user-friendly message or fallback
+        print(f"LLM Error: {e}")
+        answer = "I'm sorry, I'm having trouble processing that right now."
 
     # Build sources (include optional score if present)
     srcs: List[ChatSource] = []
