@@ -88,7 +88,8 @@ def extract_answer_from_result(result):
         return result.text
     if isinstance(result, dict):
         for k in ("content", "text", "answer"):
-            if k in result:
+            if k in result: 
+                q1
                 return result[k]
     return str(result)
 
